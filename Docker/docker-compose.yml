@@ -1,0 +1,17 @@
+name: SwiChatApp
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: chatapp_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: chatuser
+      POSTGRES_PASSWORD: chatpassword
+      POSTGRES_DB: chatdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
