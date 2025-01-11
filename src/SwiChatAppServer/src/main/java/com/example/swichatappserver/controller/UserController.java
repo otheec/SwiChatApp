@@ -2,6 +2,8 @@ package com.example.swichatappserver.controller;
 
 import com.example.swichatappserver.model.dto.UserDto;
 import com.example.swichatappserver.model.entity.User;
+import com.example.swichatappserver.model.request.CreateUserRequest;
+import com.example.swichatappserver.model.request.SearchUserRequest;
 import com.example.swichatappserver.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,8 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto createUser(@RequestBody String username) {
-        User user = userService.createUser(username);
+    public UserDto createUser(@RequestBody CreateUserRequest newUser) {
+        User user = userService.createUser(newUser.username());
         return new UserDto(user.getId(), user.getUsername());
     }
 
@@ -32,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping("/username-containing")
-    public List<UserDto> getUserByUsernameContaining(@RequestBody String username) {
-        List<User> users = userService.findUsersByUsernameContaining(username);
+    public List<UserDto> getUserByUsernameContaining(@RequestBody SearchUserRequest username) {
+        List<User> users = userService.findUsersByUsernameContaining(username.username());
         return users.stream()
                 .map(user -> new UserDto(user.getId(), user.getUsername()))
                 .collect(Collectors.toList());

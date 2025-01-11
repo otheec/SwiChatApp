@@ -30,11 +30,6 @@ public class ChatController {
         return new ChatDto(chat.getId(), participants);
     }
 
-    @GetMapping("/{chatId}")
-    public YourChatDto getChatById(@PathVariable Long chatId, @RequestParam Long userId) {
-        return chatService.getChatWithDetailsById(chatId, userId);
-    }
-
     @GetMapping("/user/{userId}")
     public List<YourChatDto> getChatsByUserId(@PathVariable Long userId) {
         return chatService.getChatsByUserId(userId);

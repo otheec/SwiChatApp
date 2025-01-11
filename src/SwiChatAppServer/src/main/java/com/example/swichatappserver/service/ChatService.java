@@ -10,7 +10,6 @@ import com.example.swichatappserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,12 +35,6 @@ public class ChatService {
         return chatRepository.findByParticipants_Id(userId).stream()
                 .map(chat -> buildYourChatDto(chat, userId))
                 .collect(Collectors.toList());
-    }
-
-    public YourChatDto getChatWithDetailsById(Long chatId, Long userId) {
-        Chat chat = Optional.ofNullable(chatRepository.findChatById(chatId))
-                .orElseThrow(() -> new IllegalArgumentException("Chat not found with ID: " + chatId));
-        return buildYourChatDto(chat, userId);
     }
 
     private YourChatDto buildYourChatDto(Chat chat, Long userId) {

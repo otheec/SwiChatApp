@@ -22,13 +22,13 @@ public class MessageController {
     @PostMapping
     public MessageDto sendMessage(@RequestBody MessageCreationRequest request) {
         Message message = messageService.sendMessage(request.getChatId(), request.getSenderId(), request.getContent());
-        return new MessageDto(message.getId(), message.getContent(), message.getSender().getUsername());
+        return new MessageDto(message.getId(), message.getContent(), message.getSender().getId(), message.getSender().getUsername());
     }
 
     @GetMapping("/chat/{chatId}")
     public List<MessageDto> getMessagesByChatId(@PathVariable Long chatId) {
         return messageService.getMessagesByChatId(chatId).stream()
-                .map(message -> new MessageDto(message.getId(), message.getContent(), message.getSender().getUsername()))
+                .map(message -> new MessageDto(message.getId(), message.getContent(), message.getSender().getId(), message.getSender().getUsername()))
                 .collect(Collectors.toList());
     }
 }
